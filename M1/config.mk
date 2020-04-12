@@ -26,6 +26,3 @@ $(_CONFIG): $(CONF)
 
 $(AUTOCONF_H): $(_CONFIG)
 	$(CONF) --syncconfig ./Kconfig
-
-%_defconfig:
-	cp configs/$@ ./.config

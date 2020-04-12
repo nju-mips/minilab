@@ -73,8 +73,8 @@ check "reverse-sort normal-printer" \
 # CONFIG_SELECTION_SORT is not set
 CONFIG_REVERSE_SORT=y
 CONFIG_USE_PRINTER=y
-# CONFIG_NORMAL_PRINTER is not set
-CONFIG_REVERSE_PRINTER=y
+CONFIG_NORMAL_PRINTER=y
+# CONFIG_REVERSE_PRINTER is not set
 " "sort with reverse-sort
 print with normal-printer
 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "
