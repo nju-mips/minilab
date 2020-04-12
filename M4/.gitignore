@@ -1,0 +1,6 @@
+*.swp
+build/
+.config
+.config.old
+include/generated
+include/config

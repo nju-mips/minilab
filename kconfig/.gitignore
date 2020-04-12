@@ -1,0 +1,7 @@
+parser.tab.*
+parser.output
+lexer.lex.*
+build/*
+mconf
+conf
+*.o
