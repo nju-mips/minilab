@@ -1,5 +1,1 @@
 # add rules here
-$(OBJ_DIR)/%.o: src/%.c Makefile $(AUTOCONF_H)
-	@echo + CC $<
-	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) -c -o $@ $<

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bin=build/lab1
+bin=build/M1
 
 function check_output() {
   if [ s"$($bin)" = s"$2" ]; then
@@ -68,12 +68,23 @@ CONFIG_REVERSE_PRINTER=y
 print with reverse-printer
 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "
 
-# make reverse_sort_defconfig
-# if [ "$?" -eq 0 ]; then
-#   make
-#   check_output "reverse-sort" "sort with reverse-sort
-# print with normal-printer
-# 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "
-# else
-#   echo -e "\e[31mFAIL reverse-sort\e[0m";
-# fi
+check "reverse-sort normal-printer" \
+"# CONFIG_BUBBLE_SORT is not set
+# CONFIG_SELECTION_SORT is not set
+CONFIG_REVERSE_SORT=y
+CONFIG_USE_PRINTER=y
+# CONFIG_NORMAL_PRINTER is not set
+CONFIG_REVERSE_PRINTER=y
+" "sort with reverse-sort
+print with normal-printer
+10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "
+
+make reverse_sort_defconfig
+if [ "$?" -eq 0 ]; then
+  make
+  check_output "reverse_sort" "sort with reverse-sort
+print with normal-printer
+10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "
+else
+  echo -e "\e[31mFAIL reverse_sort_defconfig\e[0m";
+fi

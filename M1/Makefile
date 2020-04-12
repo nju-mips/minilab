@@ -1,10 +1,12 @@
 .PHONY: app clean run
 
-NAME    := lab1
+NAME    := M1
 OBJ_DIR := build
 BINARY  := $(OBJ_DIR)/$(NAME)
-CC      := gcc
-LD      := gcc
+
+CROSS_COMPILE ?=
+CC      := $(CROSS_COMPILE)gcc
+LD      := $(CROSS_COMPILE)gcc
 CFLAGS  := -O2 -MMD -Iinclude
 
 .DEFAULT_GOAL = app
@@ -13,10 +15,6 @@ CFLAGS  := -O2 -MMD -Iinclude
 
 # Files to be compiled
 cfiles-y += src/main.c
-cfiles-$(CONFIG_BUBBLE_SORT) += src/bubble_sort.c
-cfiles-$(CONFIG_SELECTION_SORT) += src/selection_sort.c
-cfiles-$(CONFIG_NORMAL_PRINTER) += src/normal_printer.c
-cfiles-$(CONFIG_REVERSE_PRINTER) += src/reverse_printer.c
 
 OBJS := $(cfiles-y:src/%.c=$(OBJ_DIR)/%.o)
 
@@ -26,8 +24,7 @@ OBJS := $(cfiles-y:src/%.c=$(OBJ_DIR)/%.o)
 app: $(BINARY)
 
 $(BINARY): $(OBJS)
-	@echo + LD $@
-	@$(LD) -O2 -o $@ $^
+	$(LD) -O2 -o $@ $^
 
 run: $(BINARY)
 	@./$<

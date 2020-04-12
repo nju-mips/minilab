@@ -17,7 +17,7 @@ config USE_PRINTER
   default n
 
 choice
-  prompt "Algorithm selection"
+  prompt "Printer selection"
   depends on USE_PRINTER
   default NORMAL_PRINTER
 
