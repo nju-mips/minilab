@@ -1,0 +1,30 @@
+mainmenu "This is a simple Kconfig for lab1"
+
+choice
+  prompt "Algorithm selection"
+  default BUBBLE_SORT
+
+config BUBBLE_SORT
+  bool "bubble sort"
+
+config SELECTION_SORT
+  bool "selection sort"
+
+endchoice
+
+config USE_PRINTER
+  bool "use printer to print the array"
+  default n
+
+choice
+  prompt "Algorithm selection"
+  depends on USE_PRINTER
+  default NORMAL_PRINTER
+
+config NORMAL_PRINTER
+  bool "normal printer"
+
+config REVERSE_PRINTER
+  bool "reverse printer"
+
+endchoice
