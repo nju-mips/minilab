@@ -1,12 +1,12 @@
-.PHONY: image $(APPS_DIR) clean
-
 APPS     := etc hello
 APPS_DIR := $(addprefix apps/, $(APPS))
 OBJ_DIR  := build
 
-NEMU_MIPS32   := nemu/build/nemu
-IMAGE_CPIO    := build/rootfs.cpio
+NEMU_MIPS32   := nemu/$(OBJ_DIR)/nemu
+IMAGE_CPIO    := $(OBJ_DIR)/rootfs.cpio
 IMAGE_CPIO_GZ := $(IMAGE_CPIO).gz
+
+.PHONY: image $(APPS_DIR) clean
 
 export ROOTFS_HOME != pwd
 
@@ -28,7 +28,7 @@ $(APPS_DIR): %:
 
 clean:
 	-$(foreach app, $(APPS_DIR), $(MAKE) -s -C $(app) clean ;)
-	-rm -f build/*
+	-rm -rf $(OBJ_DIR)
 
-run: $(IMAGE) $(NEMU_MIPS32) 
+run: $(IMAGE_CPIO_GZ) $(NEMU_MIPS32) 
 	$(NEMU_MIPS32) -b -e binary/vmlinux --initramfs $<

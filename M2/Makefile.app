@@ -17,3 +17,5 @@ $(foreach app,$(INSTALL_APPS),$(eval $(call make_install,$(app))))
 .PHONY: install clean
 
 install: $(foreach app,$(INSTALL_APPS),$(ROOTFS_HOME)/build/$(lastword $(subst :, ,$(app))))
+
+clean: ;
