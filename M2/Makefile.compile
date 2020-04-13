@@ -1,0 +1,30 @@
+OBJ_DIR ?= build
+CROSS_COMPILE ?= mips-linux-gnu-
+
+AS = $(CROSS_COMPILE)gcc
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+LD = $(CROSS_COMPILE)gcc
+
+CFLAGS   += -mips32 -EL -O2 -MMD -Iinclude
+CXXFLAGS += -mips32 -EL -O2 -MMD -Iinclude
+
+# Files to be compiled
+OBJS := $(SRCS:%.c=$(OBJ_DIR)/%.o)
+
+# Compilation patterns
+$(OBJ_DIR)/%.o: %.cpp
+	@echo + CXX $<
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
+$(OBJ_DIR)/%.o: %.c
+	@echo + CC $<
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(APP): $(OBJS)
+	@echo + LD $@
+	@$(LD) -EL $(LDFLAGS) -o $(APP) $(OBJS)
+
+# Dependencies
+-include $(OBJS:.o=.d)
