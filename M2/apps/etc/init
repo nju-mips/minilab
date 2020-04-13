@@ -1,1 +1,6 @@
-/bin/busybox
+#!/bin/sh
+
+/bin/busybox --install -s /bin
+/bin/mount -t devtmpfs devtmpfs /dev
+
+exec /bin/sh

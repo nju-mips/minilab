@@ -7,7 +7,7 @@ $(error INSTALL_APPS is not defined)
 endif
 
 define install_target
-$(ROOTFS_HOME)/build/$(lastword $(subst :, ,$1))
+$(ROOTFS_HOME)/build/root/$(lastword $(subst :, ,$1))
 endef
 
 define make_install

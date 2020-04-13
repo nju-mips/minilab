@@ -1,4 +1,4 @@
-APPS     := etc hello
+APPS     := etc hello busybox
 APPS_DIR := $(addprefix apps/, $(APPS))
 OBJ_DIR  := build
 
@@ -16,13 +16,14 @@ $(IMAGE_CPIO_GZ): $(IMAGE_CPIO)
 	gzip -9 -c -n $< > $@
 
 $(IMAGE_CPIO): $(APPS_DIR)
-	cd $(@D) && find . | cpio --quiet -o -H newc > $(@F)
+	cd build/root && \
+	  find . | cpio --quiet -o -H newc > ../$(@F)
 
 $(NEMU_DIR):
-	git clone git@github.com:nju-mips/nemu-mips32 $@
+	git clone git@github.com:nju-mips/nemu-mips32 $@ -b M2
 
 $(NEMU_MIPS32): $(NEMU_DIR)
-	cd $< && make mips32r1_defconfig && make
+	cd $<; make mips32r1_defconfig; make
 
 $(APPS_DIR): %:
 	-$(MAKE) -s -C $@ install
@@ -32,4 +33,6 @@ clean:
 	-rm -rf $(OBJ_DIR)
 
 run: $(IMAGE_CPIO_GZ) $(NEMU_MIPS32) 
-	$(NEMU_MIPS32) -b -e binary/vmlinux --initramfs $<
+	$(NEMU_MIPS32) -b -e binary/vmlinux \
+	  --cmdline "console=ttyUL0,115200n8 lpj=20000 rd_start=0x82000000 rd_size=1M root=ram0" \
+	  --block-data ddr:0x2000000:$(IMAGE_CPIO_GZ)
