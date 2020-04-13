@@ -6,16 +6,20 @@ ifeq ($(INSTALL_APPS),)
 $(error INSTALL_APPS is not defined)
 endif
 
+define install_target
+$(ROOTFS_HOME)/build/$(lastword $(subst :, ,$1))
+endef
+
 define make_install
-$(ROOTFS_HOME)/build/$(lastword $(subst :, ,$1)): $(firstword $(subst :, ,$1))
+$(call install_target,$1): $(firstword $(subst :, ,$1))
 	mkdir -p $$(@D)
-	cp $$< $$@
+	cp -d $$< $$@
 endef
 
 $(foreach app,$(INSTALL_APPS),$(eval $(call make_install,$(app))))
 
 .PHONY: install clean
 
-install: $(foreach app,$(INSTALL_APPS),$(ROOTFS_HOME)/build/$(lastword $(subst :, ,$(app))))
+install: $(foreach app,$(INSTALL_APPS),$(call install_target,$(app)))
 
 clean: ;
