@@ -10,9 +10,12 @@ CFLAGS += -include $(AUTOCONF_H)
 
 -include $(AUTO_CONF)
 
-ifneq ($(MAKECMDGOALS),menuconfig)
+FIRST_GOAL := $(firstword $(MAKECMDGOALS))
+ifneq ($(FIRST_GOAL),menuconfig)
+ifeq ($(filter %_defconfig,$(FIRST_GOAL)),)
 $(AUTO_CONF): $(_CONFIG)
 	$(CONF) --syncconfig ./Kconfig
+endif
 endif
 
 menuconfig: $(MCONF)
@@ -21,7 +24,7 @@ menuconfig: $(MCONF)
 $(CONF) $(MCONF): %:
 	cd $(@D) && make -s $(@F)
 
-$(_CONFIG): $(CONF)
+$(_CONFIG): | $(CONF)
 	$(CONF) ./Kconfig
 
 $(AUTOCONF_H): $(_CONFIG)
