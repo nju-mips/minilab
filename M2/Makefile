@@ -1,4 +1,4 @@
-APPS     := etc hello busybox
+APPS     := lib etc hello busybox
 APPS_DIR := $(addprefix apps/, $(APPS))
 OBJ_DIR  := build
 
