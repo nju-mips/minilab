@@ -1,4 +1,4 @@
-APPS     := debian hello
+APPS     := lib etc busybox hello
 APPS_DIR := $(addprefix apps/, $(APPS))
 OBJ_DIR  := build
 
