@@ -79,7 +79,7 @@ CONFIG_NORMAL_PRINTER=y
 print with normal-printer
 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "
 
-make reverse_sort_defconfig
+make ${RANDOM}_reverse_sort_defconfig
 if [ "$?" -eq 0 ]; then
   make
   check_output "reverse_sort" "sort with reverse-sort
