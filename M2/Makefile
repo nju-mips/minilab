@@ -34,5 +34,5 @@ clean:
 
 run: $(IMAGE_CPIO_GZ) $(NEMU_MIPS32) 
 	$(NEMU_MIPS32) -b -e binary/vmlinux \
-	  --cmdline "console=ttyUL0,115200n8 lpj=20000 rd_start=0x82000000 rd_size=1M root=ram0" \
+	  --cmdline "console=ttyUL0,115200n8 lpj=20000 rd_start=0x82000000 rd_size=2M root=ram0" \
 	  --block-data ddr:0x2000000:$(IMAGE_CPIO_GZ)

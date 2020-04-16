@@ -31,4 +31,4 @@ $(foreach app,$(INSTALL_APPS),$(eval $(call make_install,$(app))))
 
 install: $(foreach app,$(INSTALL_APPS),$(call install_target,$(app)))
 
-clean: ;
+clean:

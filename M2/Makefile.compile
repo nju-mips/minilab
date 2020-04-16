@@ -28,3 +28,6 @@ $(APP): $(OBJS)
 
 # Dependencies
 -include $(OBJS:.o=.d)
+
+clean:
+	rm -rf $(OBJ_DIR)
