@@ -1,4 +1,4 @@
-APPS     := lib etc busybox hello
+APPS     := hello
 APPS_DIR := $(addprefix apps/, $(APPS))
 OBJ_DIR  := build
 
@@ -34,5 +34,5 @@ clean:
 
 run: $(IMAGE_CPIO_GZ) $(NEMU_MIPS32) 
 	$(NEMU_MIPS32) -b -e binary/vmlinux \
-	  --cmdline "console=ttyUL0,115200n8 lpj=20000 rd_start=0x82000000 rd_size=$(shell ls -l $< | awk '{print $$5}')B" \
+	  --cmdline "console=ttyUL0,115200n8 lpj=20000" \
 	  --block-data ddr:0x2000000:$(IMAGE_CPIO_GZ)
